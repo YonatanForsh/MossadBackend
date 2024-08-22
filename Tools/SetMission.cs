@@ -21,7 +21,7 @@ namespace MossadBackend.Tools
         [HttpPost]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<IActionResult> CrateMission()
+        public async Task<IActionResult> OfferMission()
         {
             var targets = _context.TargetesList.ToList();
             var agents = _context.AgentsList.ToList();
@@ -31,8 +31,7 @@ namespace MossadBackend.Tools
                 {
                     foreach (var agent in agents)
                     {
-
-                        if (Math.Sqrt(Math.Pow(Convert.ToDouble(target.X - agent.X), 2) + Math.Pow(Convert.ToDouble(target.Y - agent.Y), 2)) < 200 && agent.Status != "Active" && target.Status != "Live")
+                        if (Math.Sqrt(Math.Pow(Convert.ToDouble(target.X - agent.X), 2) + Math.Pow(Convert.ToDouble(target.Y - agent.Y), 2)) < 200 && agent.Status != "Active" && target.Status == "Live")
                         {
                             var time = Math.Sqrt(Math.Pow(Convert.ToDouble(target.X - agent.X), 2) + Math.Pow(Convert.ToDouble(target.Y - agent.Y), 2) / 5);
                             Mission mission = new Mission();

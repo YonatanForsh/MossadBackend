@@ -15,9 +15,6 @@ namespace MossadBackend.Controllers
     {
         private readonly DbServer _context;
         private readonly SetMission _SetMission;
-        
-        //private readonly AgentFunctions _service;
-
 
         public AgentsController(DbServer context)
         {
@@ -29,11 +26,8 @@ namespace MossadBackend.Controllers
             _SetMission = setMission;
         }
 
-        //public AgentsController(AgentFunctions service)
-        //{
-        //    _service = service;
-        //}
 
+        //רשימת סוכנים - ללא מגבלת הרשאות
         [HttpGet]
         public async Task<IActionResult> GetAllAgents()
         {
@@ -42,36 +36,38 @@ namespace MossadBackend.Controllers
         }
 
 
+        //יצירת סוכן - שרת סימולציה בלבד
         [HttpPost]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> CrateAgents(Agent agent)
         {
             agent.Id = Guid.NewGuid();
-            agent.X = 30;
-            agent.Y = 40;
+            await InitAgentLocation(agent.Id);
             agent.Status = Enums.AgentEnum.AgentStatus.Passive.ToString();
             _context.AgentsList.Add(agent);
             _context.SaveChanges();
-            await _SetMission.CrateMission();
+            await _SetMission.OfferMission();
             return Ok();
         }
 
 
-        //[HttpPut("agents/{id}/pin")]
-        //public async Task<IActionResult> InitAgentLocation(Guid id)
-        //{
-        //    Agent ExistAgent = _context.AgentsList.FirstOrDefault(x =>  x.Id == id);
-        //    if (ExistAgent != null)
-        //    {
-        //        Locations newLocation = new Locations(30, 40);
-        //        ExistAgent.Location = newLocation;
-        //        _context.SaveChanges();
-        //    }
-        //    return Ok(ExistAgent);
-        //}
+        //אתחול מיקום סוכן - נוצר על ידי יצירת סוכן
+        [HttpPut("agents/{id}/pin")]
+        public async Task<IActionResult> InitAgentLocation(Guid id)
+        {
+            Agent ExistAgent = _context.AgentsList.FirstOrDefault(x => x.Id == id);
+            if (ExistAgent != null)
+            {
+                ExistAgent.X = 30;
+                ExistAgent.Y = 40;
+                _context.SaveChanges();
+            }
+            return Ok(ExistAgent);
+        }
 
 
+        //הזזת מיקום סוכן - שרת סימולציה בלבד
         [HttpPut("{id}/move")]
         [Produces("application/json")]
         public async Task<IActionResult> UpdateAgentLocation(Guid id, string direction)
@@ -86,8 +82,7 @@ namespace MossadBackend.Controllers
                 {
                     ExistAgent.X += values[0];
                     ExistAgent.Y += values[1];
-            }
-
+                }
             }
             return Ok(ExistAgent);
         }

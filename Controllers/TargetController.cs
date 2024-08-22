@@ -28,46 +28,45 @@ namespace MossadBackend.Controllers
         }
 
 
-
+        //רשימת מטרות - ללא מגבלת הרשאות
         [HttpGet]
         public async Task<IActionResult> GetAllTargets()
         {
             return Ok(_context.TargetesList.ToList());
         }
 
-
+        //יצירת מטרה - שרת סימולציה בלבד
         [HttpPost]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> CrateTarget(Target target)
         {
             target.Id = Guid.NewGuid();
-            target.X = 30;
-            target.Y = 40;
+            await InitTargetLocation(target.Id);
             target.Status = Enums.TargetEnum.TargetStatus.Live.ToString();
             _context.TargetesList.Add(target);
             _context.SaveChanges();
-            await _SetMission.CrateMission();
-
+            await _SetMission.OfferMission();
             return Ok();
         }
 
-        //[HttpPut("{id}/pin")]
-        //public async Task<IActionResult> InitTargetLocation(Guid id)
-        //{
-        //    Target ExistTarget = _context.TargetesList.FirstOrDefault(x => x.Id == id);
-        //    if (ExistTarget != null)
-        //    {
-        //        Locations newLocation = new Locations(30, 40);
-        //        ExistTarget.Location = newLocation;
-        //        _context.SaveChanges();
-        //    }
-        //    return Ok(ExistTarget);
-        //}
+        //אתחול מיקום מטרה - נוצר על ידי יצירת מטרה
+        [HttpPut("{id}/pin")]
+        public async Task<IActionResult> InitTargetLocation(Guid id)
+        {
+            Target ExistTarget = _context.TargetesList.FirstOrDefault(x => x.Id == id);
+            if (ExistTarget != null)
+            {
+                ExistTarget.X = 30;
+                ExistTarget.Y = 40;
+                _context.SaveChanges();
+            }
+            return Ok(ExistTarget);
+        }
 
+        //הזזת מיקום מטרה - שרת סימולציה בלבד
         [HttpPut("{id}/move")]
         [Produces("application/json")]
-
         public async Task<IActionResult> MoveTarget(Guid id, string direction)
         {
             Target ExistTarget = _context.TargetesList.FirstOrDefault(x => x.Id == id);

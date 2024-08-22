@@ -5,6 +5,7 @@
         public enum TargetStatus
         {
             Live,
+            Tracking,
             Dead
         }
     }
