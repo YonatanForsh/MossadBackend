@@ -70,7 +70,7 @@ namespace MossadBackend.Controllers
         //הזזת מיקום סוכן - שרת סימולציה בלבד
         [HttpPut("{id}/move")]
         [Produces("application/json")]
-        public async Task<IActionResult> UpdateAgentLocation(Guid id, string direction)
+        public async Task<IActionResult> MoveAgent(Guid id, string direction)
         {
             Agent ExistAgent = _context.AgentsList.FirstOrDefault(x => x.Id == id);
             if (ExistAgent != null) 

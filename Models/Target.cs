@@ -10,6 +10,7 @@
         public int? Y { get; set; }
         public string? Status { get; set; }
 
+
         //public Target(Guid id, string name, string role, Locations location, TargetStatus status)
         public Target(Guid id, string name, string role, string picture)
 
