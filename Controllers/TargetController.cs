@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MossadBackend.DB;
+using MossadBackend.Directions;
 using MossadBackend.Models;
 
 namespace MossadBackend.Controllers
@@ -31,33 +32,43 @@ namespace MossadBackend.Controllers
         public async Task<IActionResult> CrateTarget(Target target)
         {
             target.Id = Guid.NewGuid();
+            target.X = 30;
+            target.Y = 40;
             target.Status = Enums.TargetEnum.TargetStatus.Live.ToString();
             _context.TargetesList.Add(target);
             _context.SaveChanges();
             return Ok();
         }
 
-        [HttpPut("target/{id}/pin")]
-        public async Task<IActionResult> InitTargetLocation(Guid id)
-        {
-            Target ExistTarget = _context.TargetesList.FirstOrDefault(x => x.Id == id);
-            if (ExistTarget != null)
-            {
-                Locations newLocation = new Locations(30, 40);
-                ExistTarget.Location = newLocation;
-                _context.SaveChanges();
-            }
-            return Ok(ExistTarget);
-        }
+        //[HttpPut("{id}/pin")]
+        //public async Task<IActionResult> InitTargetLocation(Guid id)
+        //{
+        //    Target ExistTarget = _context.TargetesList.FirstOrDefault(x => x.Id == id);
+        //    if (ExistTarget != null)
+        //    {
+        //        Locations newLocation = new Locations(30, 40);
+        //        ExistTarget.Location = newLocation;
+        //        _context.SaveChanges();
+        //    }
+        //    return Ok(ExistTarget);
+        //}
 
-        [HttpPut("agents/{id}/move")]
+        [HttpPut("{id}/move")]
         [Produces("application/json")]
-        public async Task<IActionResult> UpdateTargetLocation(Guid id, Locations location)
+
+        public async Task<IActionResult> MoveTarget(Guid id, string direction)
         {
             Target ExistTarget = _context.TargetesList.FirstOrDefault(x => x.Id == id);
             if (ExistTarget != null)
             {
-                ExistTarget.Location = location;
+                string[] parts = direction.Split(new[] { '"', ':' }, StringSplitOptions.RemoveEmptyEntries);
+                string dir = parts[1].Trim();
+                List<int> values = new List<int>();
+                if (Direction._direction.TryGetValue(dir, out values))
+                {
+                    ExistTarget.X += values[0];
+                    ExistTarget.Y += values[1];
+                }
             }
             return Ok(ExistTarget);
         }
