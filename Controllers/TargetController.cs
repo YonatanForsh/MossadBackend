@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using MossadBackend.DB;
 using MossadBackend.Directions;
 using MossadBackend.Models;
+using MossadBackend.Tools;
 
 namespace MossadBackend.Controllers
 {
@@ -13,11 +14,20 @@ namespace MossadBackend.Controllers
     public class TargetController : ControllerBase
     {
         private readonly DbServer _context;
+        private readonly SetMission _SetMission;
+
 
         public TargetController(DbServer context)
         {
             _context = context;
         }
+
+        public TargetController(SetMission setMission)
+        {
+            _SetMission = setMission;
+        }
+
+
 
         [HttpGet]
         public async Task<IActionResult> GetAllTargets()
@@ -37,6 +47,8 @@ namespace MossadBackend.Controllers
             target.Status = Enums.TargetEnum.TargetStatus.Live.ToString();
             _context.TargetesList.Add(target);
             _context.SaveChanges();
+            await _SetMission.CrateMission();
+
             return Ok();
         }
 

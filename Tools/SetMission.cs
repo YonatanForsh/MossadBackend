@@ -1,10 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MossadBackend.DB;
 using MossadBackend.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
+
 
 namespace MossadBackend.Tools
 {
-    public class SetMission
+    public class SetMission: ControllerBase
     {
         private readonly DbServer _context;
 
@@ -13,25 +17,38 @@ namespace MossadBackend.Tools
         {
             _context = context;
         }
-        public void Set()
+
+        [HttpPost]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public async Task<IActionResult> CrateMission()
         {
             var targets = _context.TargetesList.ToList();
             var agents = _context.AgentsList.ToList();
-            foreach (var target in targets)
+            if (targets != null && agents != null)
             {
-                foreach (var agent in agents)
+                foreach (var target in targets)
                 {
-                    if (Math.Sqrt(Math.Pow(target.X - agent.X, 2) + Math.Pow(target.Y - agent.Y, 2)) < 200)
+                    foreach (var agent in agents)
                     {
-                        Mission mission = new Mission();
-                        mission.Status = "possible";
-                        mission.AgentId = agent.Id;
-                        mission.TargetId = target.Id;
-                        _context.Mission.Add(mission);
+
+                        if (Math.Sqrt(Math.Pow(Convert.ToDouble(target.X - agent.X), 2) + Math.Pow(Convert.ToDouble(target.Y - agent.Y), 2)) < 200 && agent.Status != "Active" && target.Status != "Live")
+                        {
+                            var time = Math.Sqrt(Math.Pow(Convert.ToDouble(target.X - agent.X), 2) + Math.Pow(Convert.ToDouble(target.Y - agent.Y), 2) / 5);
+                            Mission mission = new Mission();
+                            mission.Id = new Guid();
+                            mission.Agent = agent;
+                            mission.Target = target;
+                            mission.Time = time;
+                            mission.killingTime = DateTime.Now;
+                            mission.Status = Enums.MissionEnum.MissionStatus.Offer.ToString();
+                        }
                     }
-                    _context.SaveChanges();
                 }
             }
+            _context.SaveChanges();
+            return Ok(_context.MissionsList);
         }
     }
 }
+

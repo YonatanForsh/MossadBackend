@@ -4,7 +4,7 @@ using MossadBackend.DB;
 using MossadBackend.Models;
 using MossadBackend.Enums;
 using MossadBackend.Directions;
-//using MossadBackend.Tools;
+using MossadBackend.Tools;
 using Microsoft.EntityFrameworkCore;
 
 namespace MossadBackend.Controllers
@@ -14,6 +14,7 @@ namespace MossadBackend.Controllers
     public class AgentsController : ControllerBase
     {
         private readonly DbServer _context;
+        private readonly SetMission _SetMission;
         
         //private readonly AgentFunctions _service;
 
@@ -21,6 +22,11 @@ namespace MossadBackend.Controllers
         public AgentsController(DbServer context)
         {
             _context = context;
+        }
+
+        public AgentsController(SetMission setMission)
+        {
+            _SetMission = setMission;
         }
 
         //public AgentsController(AgentFunctions service)
@@ -47,6 +53,7 @@ namespace MossadBackend.Controllers
             agent.Status = Enums.AgentEnum.AgentStatus.Passive.ToString();
             _context.AgentsList.Add(agent);
             _context.SaveChanges();
+            await _SetMission.CrateMission();
             return Ok();
         }
 
