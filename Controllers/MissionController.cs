@@ -12,27 +12,16 @@ namespace MossadBackend.Controllers
     public class MissionsController : ControllerBase
     {
         private readonly DbServer _context;
-        private readonly AgentsController _agentsController;
+        //private readonly AgentsController _agentsController;
         private readonly AgentService _agentService;
         private readonly MissionService _missionService;
 
-        public MissionsController(DbServer context)
+        public MissionsController(DbServer context,  AgentService agentService, MissionService missionService)
         {
+            //AgentsController agentsController,
             _context = context;
-        }
-
-        public MissionsController(AgentsController agentsController)
-        {
-            _agentsController = agentsController;
-        }
-
-        public MissionsController(AgentService agentService)
-        {
-            _ = agentService;
-        }
-
-        public MissionsController(MissionService missionService)
-        {
+            //_agentsController = agentsController;
+            _agentService = agentService;
             _missionService = missionService;
         }
 

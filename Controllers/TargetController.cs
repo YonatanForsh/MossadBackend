@@ -14,24 +14,15 @@ namespace MossadBackend.Controllers
     public class TargetController : ControllerBase
     {
         private readonly DbServer _context;
-        private readonly SetMission _SetMission;
+        //private readonly SetMission _SetMission;
         private readonly TargetService _targetService;
 
 
-        public TargetController(DbServer context)
+        public TargetController(DbServer context, TargetService targetService)
         {
+            // SetMission setMission,
             _context = context;
-        }
-
-
-        public TargetController(SetMission setMission)
-        {
-            _SetMission = setMission;
-        }
-
-
-        public TargetController(TargetService targetService)
-        {
+            //_SetMission = setMission;
             _targetService = targetService;
         }
 

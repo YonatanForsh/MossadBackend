@@ -5,6 +5,8 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MossadBackend", "MossadBackend.csproj", "{AF44DF7E-44D8-40C1-97A8-AA10F671C8EC}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MossadFrontend", "..\MossadFrontend\MossadFrontend.csproj", "{D4B6D593-6236-4328-BE4F-13C5B141D1D4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{AF44DF7E-44D8-40C1-97A8-AA10F671C8EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF44DF7E-44D8-40C1-97A8-AA10F671C8EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF44DF7E-44D8-40C1-97A8-AA10F671C8EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4B6D593-6236-4328-BE4F-13C5B141D1D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4B6D593-6236-4328-BE4F-13C5B141D1D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4B6D593-6236-4328-BE4F-13C5B141D1D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4B6D593-6236-4328-BE4F-13C5B141D1D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

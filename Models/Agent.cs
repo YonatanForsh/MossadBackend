@@ -1,8 +1,6 @@
 ﻿using MossadBackend.Enums;
 namespace MossadBackend.Models
 {
-
-
     public class Agent
     {
 
@@ -13,8 +11,11 @@ namespace MossadBackend.Models
         public int? Y { get; set; }
         public string? Status { get; set; }
 
-            //public Agent(string Picture, string Name, Locations location, AgentStatus Status)
-            public Agent(string Picture, string Name)
+        //public Agent(string Picture, string Name, Locations location, AgentStatus Status)
+        
+        public Agent() { }
+
+        public Agent(string Picture, string Name)
         {
             this.Picture = Picture;
             this.Name = Name;

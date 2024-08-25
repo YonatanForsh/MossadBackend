@@ -10,15 +10,12 @@ namespace MossadBackend.Tools
         private readonly AgentService _agentService;
 
 
-        public MissionService(DbServer context)
+        public MissionService(DbServer context, AgentService agentService)
         {
             _context = context;
-        }
-
-        public MissionService(AgentService agentService)
-        {
             _agentService = agentService;
         }
+
 
         [HttpPost]
         [Produces("application/json")]

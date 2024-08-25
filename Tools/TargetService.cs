@@ -8,36 +8,29 @@ namespace MossadBackend.Tools
     public class TargetService : Controller
     {
         private readonly DbServer _context;
-        private readonly SetMission _SetMission;
+        //private readonly SetMission _SetMission;
         private readonly MissionService _missionService;
 
 
-        public TargetService(DbServer context)
+        public TargetService(DbServer context, MissionService missionService)
         {
+            // SetMission setMission,
             _context = context;
-        }
-
-        public TargetService(SetMission setMission)
-        {
-            _SetMission = setMission;
-        }
-
-        public TargetService(MissionService missionService)
-        {
             _missionService = missionService;
+           // _SetMission = setMission;
         }
 
 
         //רשימת מטרות - ללא מגבלת הרשאות
         [HttpGet]
-        public async Task<IActionResult> GetAllTargetsS()
+        public async Task<List<Target>> GetAllTargetsS()
         {
-            return Ok(_context.TargetesList.ToList());
+            return _context.TargetesList.ToList();
         }
 
 
         //יצירת מטרה - שרת סימולציה בלבד
-        public async Task<IActionResult> CrateTargetS(Target target)
+        public async Task<Target> CrateTargetS(Target target)
         {
             target.Id = Guid.NewGuid();
             await InitTargetLocation(target.Id);
@@ -45,13 +38,13 @@ namespace MossadBackend.Tools
             _context.TargetesList.Add(target);
             _context.SaveChanges();
             await _missionService.OfferMissionS();
-            return Ok(target);
+            return target;
         }
 
 
         //אתחול מיקום מטרה - נוצר על ידי יצירת מטרה
         [HttpPut("{id}/pin")]
-        public async Task<IActionResult> InitTargetLocation(Guid id)
+        public async Task<Target> InitTargetLocation(Guid id)
         {
             Target ExistTarget = _context.TargetesList.FirstOrDefault(x => x.Id == id);
             if (ExistTarget != null)
@@ -60,14 +53,14 @@ namespace MossadBackend.Tools
                 ExistTarget.Y = 40;
                 _context.SaveChanges();
             }
-            return Ok(ExistTarget);
+            return ExistTarget;
         }
 
 
         //הזזת מיקום מטרה - שרת סימולציה בלבד
         [HttpPut("{id}/move")]
         [Produces("application/json")]
-        public async Task<IActionResult> MoveTargetS(Guid id, string direction)
+        public async Task<Target> MoveTargetS(Guid id, string direction)
         {
             Target ExistTarget = _context.TargetesList.FirstOrDefault(x => x.Id == id);
             if (ExistTarget != null)
@@ -81,7 +74,7 @@ namespace MossadBackend.Tools
                     ExistTarget.Y += values[1];
                 }
             }
-            return Ok(ExistTarget);
+            return ExistTarget;
         }
     }
 }

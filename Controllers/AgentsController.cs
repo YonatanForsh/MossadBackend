@@ -15,34 +15,24 @@ namespace MossadBackend.Controllers
     {
         //מופעים של מחלקות ודאטה בייס להזרקה שלהם בקונטרולר (DI)
         private readonly DbServer _context;
-        private readonly SetMission _SetMission;
+        //private readonly SetMission _SetMission;
         private readonly AgentService _agentService;
 
 
-
-        public AgentsController(DbServer context)
+        public AgentsController(DbServer context, AgentService agentService)
         {
+            // SetMission setMission,
             _context = context;
+            _agentService = agentService;
+            //_SetMission = setMission;
         }
-
-
-        public AgentsController(SetMission setMission)
-        {
-            _SetMission = setMission;
-        }
-
-        public AgentsController(AgentService agentService)
-        {
-            _ = agentService;
-        }
-
 
 
         //רשימת סוכנים - ללא מגבלת הרשאות
         [HttpGet]
         public async Task<IActionResult> GetAllAgents()
         {
-            var resolt = _agentService.GetAllAgentsS();
+            var resolt = await _agentService.GetAllAgentsS();
             return Ok(resolt);
         }
 
