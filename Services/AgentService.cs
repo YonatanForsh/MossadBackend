@@ -40,6 +40,7 @@ namespace MossadBackend.Tools
             agent.Id = Guid.NewGuid();
             agent.Status = Enums.AgentEnum.AgentStatus.Passive.ToString();
             _context.AgentsList.Add(agent);
+            _context.SaveChanges();
             await InitAgentLocationS(agent.Id);
             _context.SaveChanges();
             await _setMission.OfferMissionS();
@@ -49,7 +50,7 @@ namespace MossadBackend.Tools
 
         //אתחול מיקום סוכן - נוצר על ידי יצירת סוכן
         [HttpPut("agents/{id}/pin")]
-        public async Task<Agent> InitAgentLocationS(Guid id)
+        public async Task<Agent> InitAgentLocationS(Guid? id)
         {
             Agent ExistAgent = _context.AgentsList.FirstOrDefault(x => x.Id == id);
             if (ExistAgent != null)

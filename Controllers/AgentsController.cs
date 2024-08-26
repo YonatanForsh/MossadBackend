@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MossadBackend.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class AgentsController : ControllerBase
     {

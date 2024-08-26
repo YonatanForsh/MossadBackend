@@ -5,6 +5,7 @@ using MossadBackend.DB;
 using MossadBackend.Models;
 using MossadBackend.Tools;
 using MossadBackend.ViewModel;
+using System.Text.Json;
 
 namespace MossadBackend.ViewControllers
 {
@@ -21,10 +22,10 @@ namespace MossadBackend.ViewControllers
             _viewActiveMissions = viewActiveMissions;
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public async Task<IActionResult> FillActiveMission()
         {
-            Mission mission = _context.MissionsList.FirstOrDefaultAsync (m => m.Id == _viewActiveMissions.MissionId);
+            Mission mission = await _context.MissionsList.FirstOrDefaultAsync (m => m.Id == _viewActiveMissions.MissionId);
             _viewActiveMissions.AgentName = mission.Agent.Name;
             _viewActiveMissions.TargetName = mission.Target.Name;
             _viewActiveMissions.AgentXLocation = mission.Agent.X;
@@ -33,7 +34,8 @@ namespace MossadBackend.ViewControllers
             _viewActiveMissions.TargetYLocation = mission.Target.Y;
             _viewActiveMissions.Distance = mission.Target.Y;
             _viewActiveMissions.killingTime = mission.killingTime;
-            return Ok(_viewActiveMissions);
+            var json = JsonSerializer.Serialize(_viewActiveMissions);
+            return Ok(json);
         }
     }
 }

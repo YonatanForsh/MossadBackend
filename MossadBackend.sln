@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MossadBackend", "MossadBack
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MossadFrontend", "..\MossadFrontend\MossadFrontend.csproj", "{D4B6D593-6236-4328-BE4F-13C5B141D1D4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MossadMVC", "..\MossadMVC\MossadMVC.csproj", "{7EDA0659-3351-4E9D-80AF-80784264D433}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D4B6D593-6236-4328-BE4F-13C5B141D1D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4B6D593-6236-4328-BE4F-13C5B141D1D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4B6D593-6236-4328-BE4F-13C5B141D1D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EDA0659-3351-4E9D-80AF-80784264D433}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EDA0659-3351-4E9D-80AF-80784264D433}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EDA0659-3351-4E9D-80AF-80784264D433}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EDA0659-3351-4E9D-80AF-80784264D433}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

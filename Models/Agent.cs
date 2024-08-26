@@ -3,8 +3,7 @@ namespace MossadBackend.Models
 {
     public class Agent
     {
-
-        public int Id { get; set; }
+        public Guid? Id { get; set; }
         public string Picture { get; set; }
         public string Name { get; set; }
         public int? X { get; set; }
