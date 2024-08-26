@@ -13,14 +13,14 @@ namespace MossadBackend.Tools
     {
         private readonly DbServer _context;
         //private readonly SetMission _SetMission;
-        private readonly MissionService _missionService;
+        private readonly SetMission _setMission;
 
 
-        public AgentService(DbServer context, MissionService missionService)
+        public AgentService(DbServer context, SetMission setMission)
         {
             // SetMission setMission,
             _context = context;
-            _missionService = missionService;
+            _setMission = setMission;
             //_SetMission = setMission;
         }
 
@@ -38,11 +38,11 @@ namespace MossadBackend.Tools
         public async Task<Agent> CrateAgentsS(Agent agent)
         {
             agent.Id = Guid.NewGuid();
-            await InitAgentLocationS(agent.Id);
             agent.Status = Enums.AgentEnum.AgentStatus.Passive.ToString();
             _context.AgentsList.Add(agent);
+            await InitAgentLocationS(agent.Id);
             _context.SaveChanges();
-            await _missionService.OfferMissionS();
+            await _setMission.OfferMissionS();
             return agent;
         }
 
@@ -74,9 +74,13 @@ namespace MossadBackend.Tools
                 List<int> values = new List<int>();
                 if (Direction._direction.TryGetValue(direction, out values))
                 {
-                    ExistAgent.X += values[0];
-                    ExistAgent.Y += values[1];
+                    if (ExistAgent.X < 1000 && ExistAgent.Y < 1000)
+                    {
+                        ExistAgent.X += values[0];
+                        ExistAgent.Y += values[1];
+                    }
                 }
+                //חיסול - כאשר סוכן ומטרה נפגשים
                 Mission mission = _context.MissionsList.FirstOrDefault(x => x.Id == ExistAgent.Id);
                 if (ExistAgent.X == mission.Target.X && ExistAgent.Y == mission.Target.Y)
                 {

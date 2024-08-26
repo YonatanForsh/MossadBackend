@@ -8,16 +8,15 @@ namespace MossadBackend.Tools
     public class TargetService : Controller
     {
         private readonly DbServer _context;
-        //private readonly SetMission _SetMission;
+        private readonly SetMission _SetMission;
         private readonly MissionService _missionService;
 
 
-        public TargetService(DbServer context, MissionService missionService)
+        public TargetService(DbServer context, SetMission setMission, MissionService missionService)
         {
-            // SetMission setMission,
             _context = context;
+            _SetMission = setMission;
             _missionService = missionService;
-           // _SetMission = setMission;
         }
 
 
@@ -33,9 +32,10 @@ namespace MossadBackend.Tools
         public async Task<Target> CrateTargetS(Target target)
         {
             target.Id = Guid.NewGuid();
-            await InitTargetLocation(target.Id);
             target.Status = Enums.TargetEnum.TargetStatus.Live.ToString();
             _context.TargetesList.Add(target);
+            _context.SaveChanges();
+            await InitTargetLocation(target.Id);
             _context.SaveChanges();
             await _missionService.OfferMissionS();
             return target;
@@ -49,8 +49,8 @@ namespace MossadBackend.Tools
             Target ExistTarget = _context.TargetesList.FirstOrDefault(x => x.Id == id);
             if (ExistTarget != null)
             {
-                ExistTarget.X = 30;
-                ExistTarget.Y = 40;
+                ExistTarget.X = 35;
+                ExistTarget.Y = 45;
                 _context.SaveChanges();
             }
             return ExistTarget;

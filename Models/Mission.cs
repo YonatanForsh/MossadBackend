@@ -16,5 +16,14 @@
             this.Time = time;
             this.killingTime = killingTime;
         }
+        public Mission (Guid id,  Agent? agent, Target? target, Double time, DateTime killingTime, string Status)
+        {
+            this.Id = id;
+            this.Agent = agent;
+            this.Target = target;
+            this.Time = time;
+            this.killingTime = killingTime;
+            this.Status = Status;
+        }
     }
 }

@@ -17,7 +17,7 @@ builder.Services.AddDbContext<DbServer>(options => options.UseSqlServer(connecti
 builder.Services.AddScoped<AgentService>();
 builder.Services.AddScoped<TargetService>();
 builder.Services.AddScoped<MissionService>();
-//builder.Services.AddScoped<SetMission>();
+builder.Services.AddScoped<SetMission>();
 
 
 var app = builder.Build();

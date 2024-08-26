@@ -40,6 +40,8 @@ namespace MossadBackend.Tools
                             mission.Time = time;
                             mission.killingTime = DateTime.Now;
                             mission.Status = Enums.MissionEnum.MissionStatus.Offer.ToString();
+                            //_context.MissionsList.Add(mission);
+                            //_context.SaveChanges();
                         }
                     }
                 }
