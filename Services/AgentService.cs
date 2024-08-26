@@ -85,6 +85,7 @@ namespace MossadBackend.Tools
                 if (ExistAgent.X == mission.Target.X && ExistAgent.Y == mission.Target.Y)
                 {
                     ExistAgent.Status = "Passive";
+                    ExistAgent.kills += 1;
                     mission.Target.Status = "Dead";
                     mission.Status = "Finished";
                 }

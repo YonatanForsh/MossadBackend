@@ -7,7 +7,7 @@
         public int? X { get; set; }
         public int? Y { get; set; }
         public string? Status { get; set; }
-        public int? MissionId { get; set; }
+        public Guid? MissionId { get; set; }
         public DateTime? killingTime { get; set; }
         public int? Kills { get; set; }
 
