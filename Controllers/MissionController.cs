@@ -7,7 +7,7 @@ using MossadBackend.Tools;
 
 namespace MossadBackend.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class MissionsController : ControllerBase
     {

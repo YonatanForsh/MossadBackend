@@ -9,7 +9,7 @@ using MossadBackend.Tools;
 namespace MossadBackend.Controllers
 {
 
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class TargetController : ControllerBase
     {
@@ -31,7 +31,7 @@ namespace MossadBackend.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllTargets()
         {
-            var resolt = _targetService.GetAllTargetsS();
+            var resolt = await _targetService.GetAllTargetsS();
             return Ok(resolt);
         }
 

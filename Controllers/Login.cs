@@ -7,7 +7,7 @@ namespace MossadBackend.Controllers
     [ApiController]
     public class Login : ControllerBase
     {
-        //חיבור על די 
+        //חיבור על ידי שם משתמש
         [HttpPost]
         [Produces("Application/json")]
         [ProducesResponseType(StatusCodes.Status201Created)]

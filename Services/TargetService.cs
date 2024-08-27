@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MossadBackend.DB;
 using MossadBackend.Directions;
 using MossadBackend.Models;
@@ -21,10 +22,11 @@ namespace MossadBackend.Tools
 
 
         //רשימת מטרות - ללא מגבלת הרשאות
-        [HttpGet]
+        
         public async Task<List<Target>> GetAllTargetsS()
         {
-            return _context.TargetesList.ToList();
+            var targetsList = await _context.TargetesList.ToListAsync();
+            return targetsList;
         }
 
 

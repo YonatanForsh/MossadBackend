@@ -3,8 +3,8 @@
     public class Mission
     {    
         public Guid? Id { get; set; }
-        public Agent? Agent { get; set; }
-        public Target? Target { get; set; }
+        public int? Agent { get; set; }
+        public int? Target { get; set; }
         public Double Time { get; set; }
         public DateTime killingTime { get; set; }
         public string? Status { get; set; }
@@ -16,7 +16,7 @@
             this.Time = time;
             this.killingTime = killingTime;
         }
-        public Mission (Guid id,  Agent? agent, Target? target, Double time, DateTime killingTime, string Status)
+        public Mission (Guid id,  int? agent, int? target, Double time, DateTime killingTime, string Status)
         {
             this.Id = id;
             this.Agent = agent;

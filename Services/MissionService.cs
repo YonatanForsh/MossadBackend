@@ -35,13 +35,13 @@ namespace MossadBackend.Tools
                             var time = Math.Sqrt(Math.Pow(Convert.ToDouble(target.X - agent.X), 2) + Math.Pow(Convert.ToDouble(target.Y - agent.Y), 2) / 5);
                             Mission mission = new Mission();
                             mission.Id = new Guid();
-                            mission.Agent = agent;
-                            mission.Target = target;
+                            mission.Agent.Id = agent.Id;
+                            mission.Target.Id = target.Id;
                             mission.Time = time;
                             mission.killingTime = DateTime.Now;
                             mission.Status = Enums.MissionEnum.MissionStatus.Offer.ToString();
-                            //_context.MissionsList.Add(mission);
-                            //_context.SaveChanges();
+                            _context.MissionsList.Add(mission);
+                            _context.SaveChanges();
                         }
                     }
                 }
